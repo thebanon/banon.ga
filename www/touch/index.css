@@ -1,0 +1,4 @@
+body {font-family:Arial;display:flex;display:-webkit-flex;display:-moz-flex;flex-direction:column;justify-content:center;align-items:center;margin: 0;background: #181a1b;width: 100%;height: 100%;position: absolute;top: 0;left: 0;right: 0;color: #e8e6e3;}  
+body[data-touch]:before { content:attr(data-touch); font-size: 24px; }
+body:not([data-touch]):before { content: '\1F5B1\FE0F'; font-size: 72px; }
+body:not([data-touch]):after {content: 'Click, tap, double-click, double-tap, press, hold or long-click here.';white-space: pre-wrap;width: 240px;margin: 50px 0;text-align: center;font-size: 18px;line-height: 28px;font-weight: bolder;}

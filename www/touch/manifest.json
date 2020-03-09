@@ -1,0 +1,21 @@
+{
+    "name": "Touch JS",
+    "short_name": "Touch JS",
+    "icons": [
+        {
+            "src": "icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#181a1b",
+    "background_color": "#181a1b",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait"
+}
