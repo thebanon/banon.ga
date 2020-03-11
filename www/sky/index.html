@@ -12,6 +12,7 @@
     <style id="style"></style>
   </head><!--
   --><body class="body"><script>
+      document.domain = "banon.cf";
       function pad(str, len) { len = len || 2; var zeros = new Array(len).join('0'); return (zeros + str).slice(-len); }  
       fetch(window.location.protocol+'//api.banon.cf/v1/read/ampm').then(e => { console.log(e);
         var now = new Date(), midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(),0,0,0);
