@@ -13,7 +13,7 @@
   </head><!--
   --><body class="body"><script>
       function pad(str, len) { len = len || 2; var zeros = new Array(len).join('0'); return (zeros + str).slice(-len); }  
-      fetch(window.location.protocol+'//api.'+window.location.host+'/v1/read/ampm').then(e => { console.log(e);
+      fetch(window.location.protocol+'//api.banon.cf/v1/read/ampm').then(e => { console.log(e);
         var now = new Date(), midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(),0,0,0);
         var pct = (now.getTime() - midnight.getTime())/86400000;
         if(pct > 0.5) { pct = pct - .5; }
