@@ -10,26 +10,40 @@
     <link rel="canonical" href="https://sky.banon.cf"/>
     <link rel="apple-touch-icon" href="apple-touch-icon.png">  
     <style id="style"></style>
+    <style>
+    body[data-mode]:before { content: attr(data-mode); }
+    </style>
   </head><!--
   --><body class="body"><script>
       document.domain = "banon.cf";
       function pad(str, len) { len = len || 2; var zeros = new Array(len).join('0'); return (zeros + str).slice(-len); }  
-      fetch(window.location.protocol+'//api.banon.cf/v1/read/ampm').then(e => { console.log(e);
-        var now = new Date(), midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(),0,0,0);
-        var pct = (now.getTime() - midnight.getTime())/86400000;
-        if(pct > 0.5) { pct = pct - .5; }
+      fetch(window.location.protocol+'//api.banon.cf/v1/read/ampm')
+      .then((response) => { return response.json(); }).then(e => {
+        var now = new Date().getTime(), sunset = e.results.sunset, sunrise = e.results.sunrise;
+        var pct = 0.51, mode = "";
+        if(now<sunrise && now<sunset) { mode = "dark"; }
+        if(now>sunrise && now<sunset) { mode = "lite"; }
+        if(now>sunrise && now>sunset) { mode = "dark"; }
+        document.body.dataset.mode = mode;
+        //pct = (now.getTime() - midnight.getTime())/86400000; pct = 1 - pct;
+        //if(pct > 0.5) { pct = 1 - pct; }
         var xeh = Number(parseInt(255*pct, 10)).toString(16);
         var clr = hexa = "#"+xeh+xeh+xeh;
         if(hexa.indexOf('#') === 0) { hexa = hexa.slice(1); }
         if(hexa.length === 3) { hexa = hexa[0] + hexa[0] + hexa[1] + hexa[1] + hexa[2] + hexa[2]; }
         var r = (255 - parseInt(hexa.slice(0, 2), 16)).toString(16), g = (255 - parseInt(hexa.slice(2, 4), 16)).toString(16), b = (255 - parseInt(hexa.slice(4, 6), 16)).toString(16);
         var inv = '#' + pad(r) + pad(g) + pad(b);
-        document.body.style.backgroundColor = pct<0.5 ? inv : clr;
+        //document.body.style.backgroundColor = pct<0.5 ? inv : clr;
+        document.body.style.backgroundColor = clr
         inv = pct>0.5 ? inv : clr;
         var bg = document.body.style.backgroundColor;
         var anm = `@keyframes sky { 0% {background-color:`+bg+`;} 33% {background-color:`+inv+`;} 66% {background-color:`+bg+`;} }`;        
         document.head.querySelector('#style').insertAdjacentHTML('beforeend',anm);
-        console.log({pct,clr,inv,pct});        
+        console.log({
+          "xhr": e,
+          "timing": {now,sunset,sunrise,mode},
+          "color":{pct,clr,inv,pct}
+        });
       });    
     </script></body><!--
 --></html>
