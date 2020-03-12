@@ -12,6 +12,8 @@
     <style id="style"></style>
     <style>
     body[data-mode]:before { content: attr(data-mode); }
+    body[data-mode="lite"] { color: black; }
+    body[data-mode="dark"] { color: white; }
     </style>
   </head><!--
   --><body class="body"><script>
@@ -19,14 +21,14 @@
       function pad(str, len) { len = len || 2; var zeros = new Array(len).join('0'); return (zeros + str).slice(-len); }  
       fetch(window.location.protocol+'//api.banon.cf/v1/read/ampm')
       .then((response) => { return response.json(); }).then(e => {
-        var now = new Date().getTime(), sunset = e.results.sunset, sunrise = e.results.sunrise;
-        var pct = 0.51, mode = "";
+        var date = new Date(), now = date.getTime(), midnight = new Date(date.getFullYear(), date.getMonth(), date.getDate(),0,0,0);
+        var sunset = e.results.sunset, sunrise = e.results.sunrise;
+        var mode = "", pct = (now - midnight.getTime())/86400000;
         if(now<sunrise && now<sunset) { mode = "dark"; }
         if(now>sunrise && now<sunset) { mode = "lite"; }
         if(now>sunrise && now>sunset) { mode = "dark"; }
         document.body.dataset.mode = mode;
-        //pct = (now.getTime() - midnight.getTime())/86400000; pct = 1 - pct;
-        //if(pct > 0.5) { pct = 1 - pct; }
+        if(mode === "dark") { pct = 1 - pct; }
         var xeh = Number(parseInt(255*pct, 10)).toString(16);
         var clr = hexa = "#"+xeh+xeh+xeh;
         if(hexa.indexOf('#') === 0) { hexa = hexa.slice(1); }
@@ -39,11 +41,12 @@
         var bg = document.body.style.backgroundColor;
         var anm = `@keyframes sky { 0% {background-color:`+bg+`;} 33% {background-color:`+inv+`;} 66% {background-color:`+bg+`;} }`;        
         document.head.querySelector('#style').insertAdjacentHTML('beforeend',anm);
-        console.log({
+        var data = {
           "xhr": e,
           "timing": {now,sunset,sunrise,mode},
           "color":{pct,clr,inv,pct}
-        });
+        };
+        document.body.innerHTML = '<div>'+JSON.stringify(data,null,4)+'</div>';
       });    
     </script></body><!--
 --></html>
