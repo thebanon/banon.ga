@@ -11,29 +11,23 @@
 // @grant        GM_listValues
 // @run-at       document-end
 // @license      MIT
-// @updateURL    https://github.com/thebanon/jumplate/raw/master/user.js
-// @downloadURL  https://github.com/thebanon/jumplate/raw/master/user.js
+// @updateURL    https://banon.cf/jumplate/user.js
+// @downloadURL  https://banon.cf/jumplate/user.js
 // ==/UserScript==
 
-/*var reset = document.createElement("link");
-reset.setAttribute("rel", "stylesheet");
-reset.setAttribute("type", "text/css");
-reset.setAttribute("href", "https://github.com/thebanon/jumplate/raw/master/reset.css");
-document.head.appendChild(reset);*/
-
+/*
 var reset = document.createElement("style").setAttribute("id", "jumplate-reset");
 document.head.appendChild(reset)
-var reset = `
-    body { display: none !important; }
-`;
+var reset = ` body > * { all: unset; } `;
 document.head.querySelector('#style').insertAdjacentHTML('beforeend',reset);
+*/
 
 var style = document.createElement("link");
 style.setAttribute("rel", "stylesheet");
 style.setAttribute("type", "text/css");
-style.setAttribute("href", "https://github.com/thebanon/jumplate/raw/master/style.css");
+style.setAttribute("href", "https://banon.cf/jumplate/style.css");
 document.head.appendChild(style);
 
 var script = document.createElement("script");
-script.setAttribute("src", "https://github.com/thebanon/jumplate/raw/master/script.js");
+script.setAttribute("src", "https://banon.cf/jumplate/script.js");
 document.head.appendChild(script);
