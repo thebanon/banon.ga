@@ -3,7 +3,11 @@ body {background-color: #181a1b;margin: 0;overflow: hidden;width: 100%;height: 1
 .room {all: unset;}
 .room { position: relative; z-index: 1; }
 
-.chat {display: block;position: fixed;z-index: 12345678;bottom: 0;width: 320px;height: auto;right: 0;background-color: transparent !important;}
+.chat {display: block;position: fixed;z-index: 12345678;bottom: 0;width: 640px;height: 100%;right: 0;background-color: transparent !important;}
+.chat__Body { height: 100%; background-color: transparent !important; }
+.chat__UserList.scrollarea {height: 100%;position: fixed;left: 70px;top: 0;background-color: transparent;}
+
+.chat__FeedWrapper {background-color: transparent !important;}
 
 .roomHeader {padding: 0 10px;display: none;}
 
@@ -13,8 +17,8 @@ body {background-color: #181a1b;margin: 0;overflow: hidden;width: 100%;height: 1
 
 .cams__Cam {border: 0;}
 
-.cams__Header {justify-content: space-between;align-items: center;width: calc(100% - 20px);height: 50px;display: flex;padding: 0 10px;background-color: transparent !important;position: fixed;z-index: 12345;}
-.cams__RoomDisplayPic, .cams__RoomInfo, .cams__RoomNasme {margin: 0;padding: 0;height: 100%;display: flex;justify-content: center;align-content: center;}
+.cams__Header {justify-content: space-between;align-items: center;width: 50px;height: calc(100% - 20px);display: flex;padding: 10px;background-color: transparent !important;position: fixed;z-index: 12345;flex-direction: column;}
+.cams__RoomDisplayPic, .cams__RoomInfo, .cams__RoomNasme {margin: 0;padding: 0;width: 100%;display: flex;justify-content: center;align-content: center;flex-direction: column;}
 
 .cams__RoomDisplayPic { border-radius: 50%; }
 
@@ -35,6 +39,7 @@ body {background-color: #181a1b;margin: 0;overflow: hidden;width: 100%;height: 1
 .cams__Wrapper > :nth-child(9) { background: gray; }
 
 .cams__Cam video {object-fit: cover;}
+.cams__CamHandle {top: 0;left: 0;right: 0;bottom: 0;margin: auto;position: absolute;width: 50%;height: 30px;line-height: 30px;text-align: center;}
 
 @media (orientation: landscape) {
     .cams__Wrapper[data-cams="1"] > .cams__CamWrapper {width: 100% !important;height: 100% !important;}
