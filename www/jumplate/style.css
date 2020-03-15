@@ -1,9 +1,9 @@
-body {background-color: #181a1b;margin: 0;overflow: hidden;width: 100%;height: 100%;position: absolute;top: 0;}
+body {background-color: #181a1b;background-color: #000 !important;margin: 0;overflow: hidden;width: 100%;height: 100%;position: absolute;top: 0;}
 
 .room {all: unset;}
 .room { position: relative; z-index: 1; }
 
-.chat {display: block;position: fixed;z-index: 12345678;bottom: 0;width: 640px;height: 100%;right: 0;background-color: transparent !important;}
+.chat {display: block;position: fixed;z-index: 12345678;bottom: 0;width: 640px;height: 100%;right: 0;background-color: transparent !important;/* backdrop-filter: blur(5px); */}
 .chat__Header { background: transparent !important; }
 .chat__Body { height: 100%; background-color: transparent !important; }
 .chat__UserList.scrollarea {height: 100%;position: fixed;left: 70px;top: 0;padding: 0;background-color: transparent;}
@@ -34,6 +34,8 @@ body {background-color: #181a1b;margin: 0;overflow: hidden;width: 100%;height: 1
 
 .cams__LocalAudioActions { }
 
+.chat__Feed { padding: 0; }
+
 
 .cams__Wrapper > .cams__CamWrapper {padding: 0;border: 0;box-sizing: unset;}
 .cams__Wrapper > :nth-child(1) {background: red;}
@@ -63,7 +65,7 @@ body {background-color: #181a1b;margin: 0;overflow: hidden;width: 100%;height: 1
 
     .cams__Wrapper[data-cams="6"] > .cams__CamWrapper { width: calc(100%/3) !important; height: 50% !important; }
 
-    .cams__Wrapper[data-cams="7"] > .cams__CamWrapper {width: 25%;height: 50% !important;}
+    .cams__Wrapper[data-cams="7"] > .cams__CamWrapper {width: 25% !important;height: 50% !important;}
     .cams__Wrapper[data-cams="7"] .cams__CamWrapper:nth-child(5),
     .cams__Wrapper[data-cams="7"] .cams__CamWrapper:nth-child(6),
     .cams__Wrapper[data-cams="7"] .cams__CamWrapper:nth-child(7) { width: calc(100%/3) !important; height: 50% !important; }
@@ -102,8 +104,9 @@ body {background-color: #181a1b;margin: 0;overflow: hidden;width: 100%;height: 1
     .chat__FeedWrapper { width: calc(100% - 240px); }
 
     .chat__UserList.scrollarea {top: unset;bottom: 0;right: 0;left: unset;height: 240px;width: 240px;}
-    
 
     .chat__Header { width: calc(100% - 240px); }
+
+    .cams__Wrapper {/* height: calc(100% - 240px); */}
 
 }
