@@ -42,7 +42,6 @@ window.touch = {
     },
     events: (target,t,evt=t?t:'tap') => { document.body.dataset.touch = evt; }
 }
-
 window.touch = {
     drag: {
         start: { x:0, y:0 }, 
@@ -57,12 +56,18 @@ window.touch = {
     then: 0,
     handler: (event,type=event.type) => { //console.log({type,evt:touch.local.type});
         if (type === "touchstart") {
-            console.clear();
             touch.now = new Date().getTime(), touch.then = touch.now - touch.ghost;
+            if((touch.then < 300) && (touch.then > 0)) { 
+                touch.event = 'dbl';
+                document.body.dataset.touch = touch.event;
+                clearTimeout(touch.timer); touch.timer = null; 
+                console.log(touch.event);
+            } 
             touch.press = setTimeout(() => { 
-                touch.event = 'press'; clearTimeout(touch.press);
-                touch.timer = null; console.log(touch.event);
-                document.body.dataset.touch = touch.event; 
+                clearTimeout(touch.press); touch.press = null; 
+                clearTimeout(touch.timer); touch.timer = null; 
+                touch.event = "hold"; console.log(touch.event);
+                document.body.dataset.touch = touch.event;
             }, 500);
         }
         else if (1<0 && type === "touchmove") { 
@@ -79,17 +84,20 @@ window.touch = {
           else { touch.event = null; }
         }
         else if (type == "touchend") {
-            if((touch.then < 300) && (touch.then > 0)) { 
-                touch.event = 'dbl'; clearTimeout(touch.timer);                 
-                touch.timer = null; console.log(touch.event);
-                document.body.dataset.touch = touch.event;
-            } 
+            if((touch.then < 300) && (touch.then > 0)) {  } 
             else {
-                touch.event==="press" ? null : touch.timer = setTimeout(() => { 
-                    touch.event = 'tap'; clearTimeout(touch.timer); 
-                    touch.timer = null; console.log(touch.event);
-                    document.body.dataset.touch = touch.event; 
-                }, 300);
+                if(touch.event==="hold") {
+                    clearTimeout(touch.press); touch.press = null;
+                    clearTimeout(touch.timer); touch.timer = null;
+                    touch.event = null;
+                } else {
+                    touch.timer = setTimeout(() => { 
+                        touch.event = 'tap';                 
+                        clearTimeout(touch.press); touch.press = null;       
+                        clearTimeout(touch.timer); touch.timer = null; 
+                        document.body.dataset.touch = touch.event;
+                    }, 300);
+                }
             }
             touch.ghost = touch.now;
             clearTimeout(touch.press); touch.press = null;
