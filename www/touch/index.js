@@ -81,35 +81,7 @@ window.touch = {
             clearTimeout(touch.press); touch.press = null;
         }
     },
-    events: (target,t,type=t?t:'tap') => {
-        var id = target.closest('[id]').id;
-        var elem = target.closest('[data-evt]');
-        var evt = elem && elem.dataset && elem.dataset.evt ? elem.dataset.evt : null;
-        //console.log({target,type,id,elem,evt});
-        if(type === "tap") {
-            if(evt === "dock") {
-                if(["icon", "logo"].includes(id)) { (document.body.dataset.view === 'home' ? '/' : '/home/').router(); }
-                else if(id === "query") { target.focus(); }
-                else if(id === "avi") { is.online() ? mvc.v.profile() : '/'.router(); }
-            }
-            else if(evt === "menu") {
-                if(id === "mall") { '/mall/'.router(); }
-                if(id === "chat") { '/chat/'.router(); }
-                if(id === "feed") { '/feed/'.router(); }
-                if(id === "cart") { '/cart/'.router(); }
-                if(id === "make") { '/make/'.router(); }
-            }
-        }
-        else if(type === "press") {
-            if(evt === "dock") {
-                if(id === "logo") { (document.body.dataset.view === 'home' ? '/' : '/home/').router(); }
-            }
-            else if(evt === "menu") {
-                if(id === "shop") { '/mall/zones/'.router(); }
-                if(id === "feed") { '/feed/alerts/'.router(); }
-            }
-        }
-    }
+    events: (target,t,type=t?t:'tap') => { document.body.dataset.touch = type; }
 }
 
 function init(url) { TouchEmulator();
