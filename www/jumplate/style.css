@@ -49,7 +49,7 @@ body {background-color: #181a1b;background-color: #000 !important;margin: 0;over
 .cams__Wrapper > :nth-child(9) { background: gray; }
 
 .cams__Cam video {object-fit: cover;}
-.cams__CamHandle {top: 0;left: 0;right: 0;bottom: 0;margin: auto;position: absolute;width: 50%;height: 30px;line-height: 30px;text-align: center;}
+.cams__CamHandle {top: 0;left: 0;right: 0;bottom: 0;margin: auto;position: absolute;width: 50%;height: 30px;line-height: 30px;text-align: center;display: none;}
 
 @media (orientation: landscape) {
     .cams__Wrapper[data-cams="1"] > .cams__CamWrapper {width: 100% !important;height: 100% !important;}
