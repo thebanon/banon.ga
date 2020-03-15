@@ -35,22 +35,97 @@ window.touch = {
           else { touch.local.type = null; }
         }
         else if (type === "touchend") { 
-          clearTimeout(touch.local.press); 
-          touch.local = {
-              dbl: null, 
-              drag: {
-                start: { x:0, y:0 }, 
-                offset: {}
-              },
-              press: null, 
-              threshold: { drag: 25 },
-              type: null
-          },
+          clearTimeout(touch.local.press); touch.local.press = null; touch.local.type = null; 
+          touch.local.type === 'dbltap' ? touch.local.type === null : null;
           setTimeout(() => { document.body.removeAttribute('error'); }, 3000);
         }
     },
     events: (target,t,evt=t?t:'tap') => { document.body.dataset.touch = evt; }
 }
+
+window.touch = {
+    drag: {
+        start: { x:0, y:0 }, 
+        offset: {},        
+        threshold: 50
+    },
+    event: '',
+    ghost: 0,
+    press: null,
+    timer: null,
+    now: 0,
+    then: 0,
+    handler: (event,type=event.type) => { //console.log({type,evt:touch.local.type});
+        if (type === "touchstart") {
+            console.clear();
+            touch.now = new Date().getTime(), touch.then = touch.now - touch.ghost;
+            touch.press = setTimeout(() => { 
+                touch.event = 'press'; clearTimeout(touch.press);
+                touch.timer = null; console.log(touch.event);
+                document.body.dataset.touch = touch.event; 
+            }, 500);
+        }
+        else if (1<0 && type === "touchmove") { 
+          clearTimeout(touch.timer); touch.timer = null;
+          touch.drag.offset = {},
+          touch.drag.offset.x = Math.abs(touch.drag.start.x - event.touches[0].pageX),
+          touch.drag.offset.y = Math.abs(touch.drag.start.y - event.touches[0].pageY);
+          touch.event = 'drag'; 
+          if(
+            (touch.drag.offset.x > touch.drag.threshold) || 
+            (touch.drag.offset.y > touch.drag.threshold)) { 
+            touch.events(event.target,'drag');
+          } 
+          else { touch.event = null; }
+        }
+        else if (type == "touchend") {
+            if((touch.then < 300) && (touch.then > 0)) { 
+                touch.event = 'dbl'; clearTimeout(touch.timer);                 
+                touch.timer = null; console.log(touch.event);
+                document.body.dataset.touch = touch.event;
+            } 
+            else {
+                touch.event==="press" ? null : touch.timer = setTimeout(() => { 
+                    touch.event = 'tap'; clearTimeout(touch.timer); 
+                    touch.timer = null; console.log(touch.event);
+                    document.body.dataset.touch = touch.event; 
+                }, 300);
+            }
+            touch.ghost = touch.now;
+            clearTimeout(touch.press); touch.press = null;
+        }
+    },
+    events: (target,t,type=t?t:'tap') => {
+        var id = target.closest('[id]').id;
+        var elem = target.closest('[data-evt]');
+        var evt = elem && elem.dataset && elem.dataset.evt ? elem.dataset.evt : null;
+        //console.log({target,type,id,elem,evt});
+        if(type === "tap") {
+            if(evt === "dock") {
+                if(["icon", "logo"].includes(id)) { (document.body.dataset.view === 'home' ? '/' : '/home/').router(); }
+                else if(id === "query") { target.focus(); }
+                else if(id === "avi") { is.online() ? mvc.v.profile() : '/'.router(); }
+            }
+            else if(evt === "menu") {
+                if(id === "mall") { '/mall/'.router(); }
+                if(id === "chat") { '/chat/'.router(); }
+                if(id === "feed") { '/feed/'.router(); }
+                if(id === "cart") { '/cart/'.router(); }
+                if(id === "make") { '/make/'.router(); }
+            }
+        }
+        else if(type === "press") {
+            if(evt === "dock") {
+                if(id === "logo") { (document.body.dataset.view === 'home' ? '/' : '/home/').router(); }
+            }
+            else if(evt === "menu") {
+                if(id === "shop") { '/mall/zones/'.router(); }
+                if(id === "feed") { '/feed/alerts/'.router(); }
+            }
+        }
+    }
+}
+
 function init(url) { TouchEmulator();
   document.body.addEventListener("touchstart",touch.handler,{passive:true});
   document.body.addEventListener("touchmove",touch.handler,{passive:true});
