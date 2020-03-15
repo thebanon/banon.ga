@@ -12,9 +12,7 @@ window.touch = {
         offset: {}
       },
       press: null, 
-      threshold: {
-        drag: 25
-      },
+      threshold: { drag: 25 },
       type: null
     },
     handler: (event,type=event.type) => {
@@ -33,14 +31,25 @@ window.touch = {
             (touch.local.drag.offset.x > touch.local.threshold.drag) || 
             (touch.local.drag.offset.y > touch.local.threshold.drag)) { 
             touch.events(event.target,'drag');
-          }
+          } 
+          else { touch.local.type = null; }
         }
         else if (type === "touchend") { 
-          clearTimeout(touch.local.press); touch.local.press = null; touch.local.type = null; 
+          clearTimeout(touch.local.press); 
+          touch.local = {
+              dbl: null, 
+              drag: {
+                start: { x:0, y:0 }, 
+                offset: {}
+              },
+              press: null, 
+              threshold: { drag: 25 },
+              type: null
+          },
           setTimeout(() => { document.body.removeAttribute('error'); }, 3000);
         }
     },
-    events: (target,t,touch=t?t:'tap') => { document.body.dataset.touch = touch; }
+    events: (target,t,evt=t?t:'tap') => { document.body.dataset.touch = evt; }
 }
 function init(url) { TouchEmulator();
   document.body.addEventListener("touchstart",touch.handler,{passive:true});
