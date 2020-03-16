@@ -18,7 +18,7 @@ window.touch = {
     then: 0,
     touches: null,
     handler: (event,type=event.type) => { //console.log({type});
-        if (type === "touchstart") {
+        if (type === "touchstart") { console.clear();
             touch.touches = event.touches; 
             touch.now = new Date().getTime(), touch.then = touch.now - touch.ghost;
             touch.drag.offset.x = this.offsetLeft, touch.drag.offset.y = this.offsetTop;
@@ -28,19 +28,28 @@ window.touch = {
                 clearTimeout(touch.timer); touch.timer = null; 
                 touch.events(event.target,touch.event);
             }
-            touch.press = setTimeout(() => { 
+            touch.press = setTimeout(() => {
+                touch.event= ["dragstart", "dragmove"].includes(touch.event) ? 'dragmove' : 'dragstart';
                 clearTimeout(touch.press); touch.press = null; 
                 clearTimeout(touch.timer); touch.timer = null; 
                 touch.event = "hold"; touch.events(event.target,touch.event);
             }, 500);
         }
         else if (type === "touchmove") {
-            ["dragstart", "dragmove"].includes(touch.event) ? touch.event='dragmove' : touch.event='dragstart';
-            clearTimeout(touch.press); touch.press = null;
-            clearTimeout(touch.timer); touch.timer = null; touch.events(event.target,touch.event);
+            var moveX = event.touches[0].pageX, moveY = event.touches[0].pageY;
+            var origX = touch.drag.start.x, origY = touch.drag.start.y;
+            var dragMove = Math.abs(touch.drag.start - moveX);
+            var a = Math.abs(touch.drag.start.x - moveX), b = Math.abs(touch.drag.start.y - moveY), c = Math.sqrt( a*a + b*b );            
+            var dragging = c > touch.drag.threshold;
+            if(dragging) {
+                console.log({c,dragging})
+                touch.event= ["dragstart", "dragmove"].includes(touch.event) ? 'dragmove' : 'dragstart';
+                clearTimeout(touch.press); touch.press = null;
+                clearTimeout(touch.timer); touch.timer = null; 
+                touch.events(event.target,touch.event);
+            }
         }
         else if (type == "touchend") {
-
 
                 if(["dragstart","dragmove"].includes(touch.event)) {
 
