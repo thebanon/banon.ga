@@ -82,7 +82,10 @@ window.touch = {
             clearTimeout(touch.press); touch.press = null;
         }
     },
-    events: (target,t,type=t?t:'tap') => { document.body.dataset.touch = type; }
+    events: (target,t,type=t?t:'tap') => { 
+      document.body.dataset.touch = type;      
+      target.type === 'text' ? target.focus() : document.activeElement.blur();
+    }
 }
 
 function init(url) { TouchEmulator();
