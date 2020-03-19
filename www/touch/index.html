@@ -19,7 +19,7 @@
     <script async src='touch.js'></script>
   </head>
 
-  <body id="body" data-nojs onload="init(window.location.pathname+window.location.hash)">
+  <body id="body" data-nojs onload="init(window.location.pathname+window.location.hash)" ontouchstart="touch.handler(event)" ontouchmove="touch.handler(event)" ontouchend="touch.handler(event)" ontouchcancel="touch.handler(event)">
 
     <noscript>
       <div>Javascript Required</div>

@@ -1,9 +1,3 @@
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(function(registrations) {
-    for(let registration of registrations) { registration.unregister(); }
-    navigator.serviceWorker.register('sw.js');
-  });
-}
 window.touch = {
     drag: {
         start: { x:0, y:0 }, 
@@ -86,11 +80,4 @@ window.touch = {
       document.body.dataset.touch = type;      
       target.type === 'text' ? target.focus() : document.activeElement.blur();
     }
-}
-
-function init(url) { TouchEmulator();
-  document.body.addEventListener("touchstart",touch.handler,{passive:true});
-  document.body.addEventListener("touchmove",touch.handler,{passive:true});
-  document.body.addEventListener("touchcancel",touch.handler,false);
-  document.body.addEventListener("touchend",touch.handler,false);
 }
