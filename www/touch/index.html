@@ -19,7 +19,7 @@
     <script async src='touch.js'></script>
   </head>
 
-  <body id="body" data-nojs ontouchstart="touch.handler(event)" ontouchmove="touch.handler(event)" ontouchend="touch.handler(event)" ontouchcancel="touch.handler(event)">
+  <body id="body" data-nojs onload="TouchEmulator();" ontouchstart="touch.handler(event)" ontouchmove="touch.handler(event)" ontouchend="touch.handler(event)" ontouchcancel="touch.handler(event)">
 
     <noscript>
       <div>Javascript Required</div>
