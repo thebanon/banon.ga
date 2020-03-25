@@ -15,11 +15,11 @@
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="/cdn/png/apple-touch-icon.png">
     <link async rel="stylesheet" href="index.css" media="all">
-    <script async src='index.js'></script>
-    <script async src='touch.js'></script>
+    <script src='touch.js'></script>
+    <script src='index.js'></script>
   </head>
 
-  <body id="body" data-nojs onload="TouchEmulator();" ontouchstart="touch.handler(event)" ontouchmove="touch.handler(event)" ontouchend="touch.handler(event)" ontouchcancel="touch.handler(event)">
+  <body id="body" data-nojs onload="TouchEmulator();" ontouchstart="onTouch.handler(event)" ontouchmove="onTouch.handler(event)" ontouchend="onTouch.handler(event)" ontouchcancel="onTouch.handler(event)">
 
     <noscript>
       <div>Javascript Required</div>
