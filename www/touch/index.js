@@ -1,20 +1,13 @@
 window.is = {
-  cam: view => { return ['cam'].includes(view) ? true : false; },
-  dark: (pct,date=new Date()) => { document.body.dataset.mode = pct<0.5 ? "lite" : "dark"; },
-  local: () => { return window.location.origin.includes('localhost') ? true : false; },
-  external: u => { return u.includes('://') || u.includes(';base64,'); },
   mobile: () => { 
     var ua = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     ua ? document.body.dataset.mobi=true : document.body.dataset.mobi ? document.body.removeAttribute('data-mobi') : null; 
     return ua;
   },
-  numeric: a => { return a===0 || parseInt(a)>0 ? true : false; },
-  online: () => { return firebase.auth().currentUser; },
   overflow: (node,dir) => { 
     if(node == null) { return null; }
     return node['scroll'+dir] > node['client'+dir] ? node : is.overflow(node.parentNode,dir);
-  },
-  sunset: (sunrise, sunset, now) => { document.body.dataset.mode = now < sunrise || now > sunset ? 'dark' : 'lite'; }
+  }
 };
 function init() {
     var host = window.location.host.split('.'); console.log({host})
