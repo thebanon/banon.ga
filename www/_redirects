@@ -1,1 +1,4 @@
 https://sky.banon.cf/* /sky/index.html  200
+
+https://api.banon.cf https://api-banon.herokuapp.com 200
+https://api.banon.cf/* https://api-banon.herokuapp.com/:splat 200
